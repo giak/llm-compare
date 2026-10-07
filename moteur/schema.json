@@ -29,7 +29,26 @@
     "facts": {
       "type": "object",
       "description": "Faits de niveau plateforme (allocations, règles, grilles horaires). Toute valeur porte source + tier + date via le bloc `evidence`.",
-      "additionalProperties": true
+      "additionalProperties": {
+        "type": "object",
+        "required": ["value", "evidence"],
+        "additionalProperties": false,
+        "properties": {
+          "value": {},
+          "evidence": {
+            "type": "object",
+            "required": ["url", "tier", "at"],
+            "additionalProperties": false,
+            "properties": {
+              "url": { "type": "string", "format": "uri", "pattern": "^https?://" },
+              "tier": { "enum": [1, 2, 3] },
+              "at": { "type": "string", "format": "date-time" },
+              "commit": { "type": "string" },
+              "quote": { "type": "string" }
+            }
+          }
+        }
+      }
     },
     "models": {
       "type": "array",
@@ -69,9 +88,9 @@
             "type": "object",
             "required": ["value", "unit", "promo"],
             "additionalProperties": false,
-            "description": "Prix Freebuff structuré. Rendu : value=0 + promo => « 0 promo » ; unit=h => « <value>/h » (15/h) ; sinon « <value> <unit> » (5 FB/h, 5 j/h).",
+            "description": "Prix structuré. Rendu : value=0 + promo => « 0 promo » ; sinon unit=h => « <value>/h » et les promotions portent le suffixe « (promo) ».",
             "properties": {
-              "value": { "type": ["number", "null"] },
+              "value": { "type": ["number", "null"], "minimum": 0 },
               "unit": { "type": ["string", "null"], "description": "h | FB/h | j/h | … (unité de `value`)" },
               "promo": { "type": "boolean" },
               "since": { "type": ["string", "null"], "format": "date-time" },
@@ -90,7 +109,7 @@
           },
           "measures": {
             "type": "object",
-            "description": "Colonnes AA, saisies (jamais scrapées), verbatim du tableau — les marqueurs y sont conservés : **48,1** = meilleur de la colonne, « 71 * » = index antérieur, « 28 † » = estimé. La version d'index (v4.3.2) et la date de mesure sont globales dans `facts`.",
+            "description": "Colonnes AA, saisies (jamais scrapées), verbatim du tableau — les marqueurs y sont conservés : **48,1** = meilleur de la colonne, « 71 * » = index antérieur, « 28 † » = estimé. La version d'index et sa preuve datée sont globales dans `facts`; le moteur ne vérifie pas une provenance par cellule.",
             "required": ["aa", "tb4", "hle", "gdpval", "aa_lcr", "omis_prec", "omis_nonhall", "usd_task", "tok_s", "e2e_s"],
             "additionalProperties": { "type": "string" }
           },
@@ -112,7 +131,7 @@
                   "required": ["url", "tier"],
                   "additionalProperties": false,
                   "properties": {
-                    "url": { "type": "string" },
+                    "url": { "type": "string", "format": "uri", "pattern": "^https?://" },
                     "tier": { "enum": [1, 2, 3] },
                     "commit": { "type": "string" },
                     "quote": { "type": "string" }
@@ -121,7 +140,73 @@
               }
             }
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "status": { "const": "retired" } }, "required": ["status"] },
+            "then": {
+              "required": ["retired_at"],
+              "properties": {
+                "retired_at": { "type": "string" },
+                "access": { "const": "unknown" },
+                "price": { "properties": { "value": { "type": "null" }, "unit": { "type": "null" }, "promo": { "const": false } } }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "status": { "const": "absent" } }, "required": ["status"] },
+            "then": {
+              "properties": {
+                "access": { "const": "unknown" },
+                "price": { "properties": { "value": { "type": "null" }, "unit": { "type": "null" }, "promo": { "const": false } } }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": { "status": { "const": "live" }, "access": { "const": "unknown" } },
+              "required": ["status", "access"]
+            },
+            "then": {
+              "properties": {
+                "price": { "properties": { "value": { "type": "null" }, "unit": { "type": "null" }, "promo": { "const": false } } }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": { "status": { "const": "live" }, "access": { "const": "metered" } },
+              "required": ["status", "access"]
+            },
+            "then": { "properties": { "price": { "properties": { "value": { "type": "number", "minimum": 0 } } } } }
+          },
+          {
+            "if": {
+              "properties": { "status": { "const": "live" }, "access": { "const": "full" } },
+              "required": ["status", "access"]
+            },
+            "then": { "properties": { "price": { "properties": { "value": { "const": 0 } } } } }
+          },
+          {
+            "if": {
+              "properties": { "status": { "const": "live" }, "access": { "enum": ["paid_only", "us_only"] } },
+              "required": ["status", "access"]
+            },
+            "then": { "properties": { "price": { "properties": { "value": { "type": "null" } } } } }
+          },
+          {
+            "if": { "properties": { "price": { "properties": { "promo": { "const": true } } } }, "required": ["price"] },
+            "then": { "properties": { "price": { "properties": { "value": { "type": "number", "minimum": 0 } } } } }
+          },
+          {
+            "if": { "properties": { "price": { "properties": { "value": { "type": "null" } } } }, "required": ["price"] },
+            "then": { "properties": { "price": { "properties": { "unit": { "type": "null" } } } } }
+          },
+          {
+            "if": { "properties": { "price": { "properties": { "value": { "type": "number" } } } }, "required": ["price"] },
+            "then": { "properties": { "price": { "properties": { "unit": { "type": "string" } } } } }
+          }
+        ]
       }
     }
   }

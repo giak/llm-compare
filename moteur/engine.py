@@ -100,8 +100,8 @@ GEN_END = "<!-- /GEN -->"
 SUPER = r"¹²³⁴⁵⁶⁷⁸⁹⁰"
 RE_FN = re.compile(f"([{SUPER}]+)$")
 RE_MODEL = re.compile(r"^(.*?)(?: \(([^()]+)\))?(?: ([" + SUPER + r"†*]+))?$")
-RE_PRICE = re.compile(r"^(\d+)(?:/h| (FB/h|j/h))$")
-RE_RETIRED = re.compile(r"^🪦 \*\*retiré (\d{2})/(\d{2})\*\*$")
+RE_PRICE = re.compile(r"^(\d+)(?:/h| (FB/h|j/h))(?: \(promo\))?$")
+RE_RETIRED = re.compile(r"^🪦 \*\*retiré (\d{2})/(\d{2})(?:/(\d{4}))?\*\*$")
 
 VALID_STATUS = ("live", "retired", "absent")
 VALID_ACCESS = ("full", "metered", "paid_only", "us_only", "unknown")
@@ -393,8 +393,42 @@ def validate(state: object, expected_platform: str | None = None) -> None:
         ):
             error(f"{where}.sha1", "empreinte SHA-1 invalide")
 
-    if not isinstance(state.get("facts"), dict):
+    facts = state.get("facts")
+    if not isinstance(facts, dict):
         error("facts", "objet attendu")
+    else:
+        for name, fact in facts.items():
+            where = f"facts.{name}"
+            if not isinstance(name, str) or not name:
+                error("facts", "clés non vides attendues")
+                continue
+            if not isinstance(fact, dict):
+                error(where, "objet {value, evidence} attendu")
+                continue
+            if set(fact) - {"value", "evidence"}:
+                error(where, "seuls value et evidence sont autorisés")
+            if "value" not in fact:
+                error(where, "champ value manquant")
+            evidence = fact.get("evidence")
+            if not isinstance(evidence, dict):
+                error(f"{where}.evidence", "objet attendu")
+                continue
+            if set(evidence) - {"url", "tier", "at", "commit", "quote"}:
+                error(f"{where}.evidence", "champ supplémentaire interdit")
+            for key in ("url", "tier", "at"):
+                if key not in evidence:
+                    error(f"{where}.evidence", f"champ manquant {key}")
+            if "url" in evidence and not valid_http_url(evidence["url"]):
+                error(f"{where}.evidence.url", "URL HTTP(S) attendue")
+            if "tier" in evidence and (
+                type(evidence["tier"]) is not int or evidence["tier"] not in (1, 2, 3)
+            ):
+                error(f"{where}.evidence.tier", "niveau 1, 2 ou 3 attendu")
+            if "at" in evidence:
+                datetime_field(evidence["at"], f"{where}.evidence.at")
+            for key in ("commit", "quote"):
+                if key in evidence and not isinstance(evidence[key], str):
+                    error(f"{where}.evidence.{key}", "chaîne attendue")
 
     model_fields = {
         "id", "display", "effort", "suffix", "status", "section", "retired_at",
@@ -479,6 +513,8 @@ def validate(state: object, expected_platform: str | None = None) -> None:
                 or (isinstance(value, float) and not math.isfinite(value))
             ):
                 error(f"{where}.price.value", "nombre ou null attendu")
+            elif value is not None and value < 0:
+                error(f"{where}.price.value", "prix négatif interdit")
             if price.get("unit") is not None and not table_cell(price.get("unit")):
                 error(f"{where}.price.unit", "chaîne sans séparateur Markdown ou null attendue")
             if "promo" in price and not isinstance(price["promo"], bool):
@@ -490,6 +526,31 @@ def validate(state: object, expected_platform: str | None = None) -> None:
             for field in ("since", "end"):
                 if field in price:
                     datetime_field(price[field], f"{where}.price.{field}", nullable=True)
+            if price.get("promo") and value is None:
+                error(f"{where}.price.promo", "une promotion exige un prix connu")
+            if price.get("since") and price.get("end"):
+                starts = parse_datetime(price["since"])
+                ends = parse_datetime(price["end"])
+                if starts is not None and ends is not None and ends < starts:
+                    error(f"{where}.price.end", "fin de promotion antérieure au début")
+
+            access = m.get("access")
+            status = m.get("status")
+            if status == "live":
+                if access == "unknown":
+                    if value is not None or price.get("promo"):
+                        error(f"{where}.price", "un prix inconnu ne peut pas porter de valeur")
+                elif access in ("paid_only", "us_only") and value is not None:
+                    error(f"{where}.price", "un accès payant ne porte pas de prix gratuit")
+                elif access == "metered" and value is None:
+                    error(f"{where}.price", "un accès metered exige un prix")
+                elif access == "full" and value != 0:
+                    error(f"{where}.price", "un accès full doit être tarifé à zéro")
+            elif status in ("retired", "absent"):
+                if access != "unknown":
+                    error(f"{where}.access", f"status={status} exige access=unknown")
+                if value is not None or price.get("promo"):
+                    error(f"{where}.price", f"status={status} exige un prix nul et sans promotion")
 
         context = m.get("context")
         if not isinstance(context, dict):
@@ -641,7 +702,7 @@ def parse_model_row(c: list[str]) -> dict:
 def parse_price_cell(raw: str) -> tuple[str, dict, str, str | None, bool, str]:
     """Cellule de prix de plateforme -> (access, price, status, retired_at, emphasis, fn).
 
-    Grammaire de la cellule GEN (valeurs fixes : 🔒 payant, hors cat., 0 promo, 🪦…) :
+    Grammaire de la cellule GEN (valeurs fixes : 🔒 payant, hors cat., promo, 🪦…) :
     c'est le contrat de rendu du projet, pas la propriété d'une plateforme."""
     emphasis = raw.startswith("**") and raw.endswith("**") and not raw.startswith("🪦")
     inner = raw[2:-2] if emphasis else raw
@@ -657,17 +718,25 @@ def parse_price_cell(raw: str) -> tuple[str, dict, str, str | None, bool, str]:
         mm = RE_RETIRED.match(inner)
         if not mm:
             sys.exit(f"Cellule retrait illisible: {raw!r}")
-        day, month = mm.groups()
+        day, month, year = mm.groups()
         today_utc = dt.datetime.now(dt.timezone.utc).date()
         retired = None
-        for year in range(today_utc.year, today_utc.year - 9, -1):
+        if year is not None:
             try:
-                candidate = dt.date(year, int(month), int(day))
+                candidate = dt.date(int(year), int(month), int(day))
             except ValueError:
-                continue
-            if candidate <= today_utc:
+                candidate = None
+            if candidate is not None and candidate <= today_utc:
                 retired = candidate
-                break
+        else:
+            for candidate_year in range(today_utc.year, today_utc.year - 9, -1):
+                try:
+                    candidate = dt.date(candidate_year, int(month), int(day))
+                except ValueError:
+                    continue
+                if candidate <= today_utc:
+                    retired = candidate
+                    break
         if retired is None:
             sys.exit(f"Date de retrait invalide : {raw!r}")
         return "unknown", dict(null_price), "retired", retired.isoformat(), emphasis, fn
@@ -684,7 +753,9 @@ def parse_price_cell(raw: str) -> tuple[str, dict, str, str | None, bool, str]:
     if not pm:
         sys.exit(f"Cellule prix illisible: {raw!r}")
     value, sub = pm.groups()
-    price = {"value": int(value), "unit": sub or "h", "promo": False, "since": None, "end": None}
+    is_promo = inner.endswith(" (promo)")
+    price = {"value": int(value), "unit": sub or "h", "promo": is_promo,
+             "since": None, "end": None}
     return "metered", price, "live", None, emphasis, fn
 
 
@@ -693,7 +764,7 @@ def parse_price_cell(raw: str) -> tuple[str, dict, str, str | None, bool, str]:
 def render_price_cell(m: dict) -> str:
     if m["status"] == "retired":
         d = dt.date.fromisoformat(m["retired_at"])
-        inner = f"🪦 **retiré {d.day:02d}/{d.month:02d}**"
+        inner = f"🪦 **retiré {d.day:02d}/{d.month:02d}/{d.year}**"
     elif m["status"] == "absent":
         inner = "hors cat."
     elif m["access"] == "paid_only":
@@ -707,6 +778,8 @@ def render_price_cell(m: dict) -> str:
     else:
         v, u = m["price"]["value"], m["price"]["unit"]
         inner = f"{v}/{u}" if u == "h" else f"{v} {u}"
+        if m["price"].get("promo"):
+            inner += " (promo)"
 
     fn = (m.get("fn") or {}).get(FN_KEY, "")
     cell = inner + (f" {fn}" if fn else "")
@@ -767,6 +840,8 @@ def render_prix_line(m: dict) -> str:
     else:
         v, u = m["price"]["value"], m["price"]["unit"]
         body = f"{v}/{u}" if u == "h" else f"{v} {u}"
+        if m["price"].get("promo"):
+            body += " (promo)"
     return f"**Sur {PLATFORM_LABEL} :** {body}"
 
 
@@ -2129,6 +2204,21 @@ def _aware(x: dt.datetime) -> dt.datetime:
     return x if x.tzinfo else x.replace(tzinfo=dt.timezone.utc)
 
 
+def previous_recorded_price(model: dict, at: str) -> object:
+    """Dernier prix enregistré avant l'événement, ou None si l'historique ne le sait pas."""
+    instant = parse_datetime(at)
+    if instant is None:
+        return None
+    previous = [
+        (when, event.get("to"))
+        for event in model.get("history", [])
+        if event.get("field") == "price"
+        and (when := parse_datetime(event.get("at"))) is not None
+        and when < instant
+    ]
+    return max(previous, key=lambda item: item[0])[1] if previous else None
+
+
 def compute_changes(state: dict, obs: dict, adapter: dict) -> dict:
     """Le cœur : observé vs état. Auto = appliqué par `apply` ; structurel/à
     vérifier/problèmes = jugement humain. Extrait vide => problème (jamais de
@@ -2352,7 +2442,8 @@ def compute_changes(state: dict, obs: dict, adapter: dict) -> dict:
                     continue
                 if (mid, ch["at"]) not in have:
                     auto.append({"op": "history", "id": mid,
-                                 "entry": {"at": ch["at"], "field": "price", "from": None,
+                                 "entry": {"at": ch["at"], "field": "price",
+                                           "from": previous_recorded_price(by_id[mid], ch["at"]),
                                            "to": ch["price"],
                                            "evidence": {"url": solar_url, "tier": 1,
                                                         "quote": ch["tagline"] or ""}}})
