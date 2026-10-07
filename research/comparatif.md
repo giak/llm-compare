@@ -36,7 +36,7 @@ donc sur le même protocole. `n.d.` = non publié. `*` = version d'index antéri
 | MiMo-V2.6-Flash | 37,9 | 22,7 | n.d. | n.d. | n.d. | n.d. | n.d. | 0,06 | 51 | 53 | 1M | 10/h |
 | Laguna S 2.1 | **n.d.** | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | 1M | **hors cat. ⁴** |
 | Solar Mini 4 | 24,1 | **1,0** | 25,8 | 28,6 | 83,3 | 18,4 | 64,2 | ~0,35 | 208 | n.d. | 524K | 5 FB/h ⁷ |
-| Space Bunny Alpha | **n.d.** | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | 1M | 🪦 **retiré 06/10** |
+| Space Bunny Alpha | **n.d.** | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | 1M | 🪦 **retiré 06/10/2026** |
 | DeepSeek V4.1 Flash Fast | **n.d.** | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | 5 j/h ⁵ |
 | Gemini 3.8 Flash | **n.d.** | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | 1M | **🔒 payant** |
 | GPT-6.1 Sol | **n.d.** | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | n.d. | 1M | **🔒 FR = payant** |
