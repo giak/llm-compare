@@ -69,8 +69,9 @@ append-only · « tout ce qui n'est pas dans l'ORCHESTRATOR n'existe pas ».
   06/10 + 2 `hors cat.`), index commun **AA v4.3.2**.
 - opencode : 14 modèles live dans l'état ; divergence tier 1/tier 2 suivie (flag debout
   `mimo-v2-5-free`, jamais auto-appli).
-- Boucle quotidienne : `moteur/timer.sh` (systemd `--user`, 06:17±15 min + hebdo dim.
-  07:23), rapports `research/rapport.md` et `research/rapport-opencode.md`.
+- Collecte quotidienne/hebdomadaire : `moteur/timer.sh` (systemd `--user`, 06:17±15 min
+  + dim. 07:23) écrit les rapports `research/rapport.md` et
+  `research/rapport-opencode.md`. Leur traitement reste externe au timer.
 
 ## Ouvert
 

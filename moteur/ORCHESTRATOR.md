@@ -13,11 +13,11 @@ Une page. Tout ce qui n'est pas ici n'existe pas.
 | Bloc `GEN:prix` dans les 14 fiches | ✅ migré (**42 ajouts, 0 suppression**) |
 | `templates/fiche-llm.md` | ✅ contrat de fiche (H1 == id slugifié, 5 sections exigées, 5 recommandées) ; `lint` vérifie que le template contient bien les exigées |
 | `lint` actif | ✅ appariement bijectionnel, structure de fiche, prix fiche↔état, état interne. ⚠ **4 avertissements réels** (sections recommandées manquantes dans 4 fiches — relevé, pas bloqué) |
-| `lint` §7 | ✅ P9+P10 : « déprécié ⇒ relecture claim gratuit » = **warn** (docs Zen ∩ état, pas d'NLP) ; `facts.index_version` **exigé** (`evidence.url`+`tier`) si fiches citent l'AA (saisi P9 : `v4.3.2` tier 1) ; §7-3 **err** : status=retired ⇒ aucune ligne **machine (GEN)** ne revendique gratuit (prose annotée exclue — faux positifs prouvés) ; best-of = **N/A** (pas une sortie §6) ; version = globale (`facts.index_version`), une seule version active |
+| `lint` §7 | ✅ P9+P10 : « déprécié ⇒ relecture claim gratuit » = **warn** (docs Zen ∩ état, pas d'NLP) ; `facts.index_version` **exigé** (`evidence.url`+`tier`+`at`) si fiches citent l'AA (saisi P9 : `v4.3.2` tier 1) ; §7-3 **err** : status=retired ⇒ aucune ligne **machine (GEN)** ne revendique gratuit (prose annotée exclue — faux positifs prouvés) ; best-of = **N/A** (pas une sortie §6) ; version = globale (`facts.index_version`), une seule version active |
 | `adapters/freebuff.json` | ✅ 6 sources (5×tier 1 + RSS tier 2), health (llms.txt 200 + ancre), aliases, `label`/`model_map`/`research` ; **gate RSS P10** : dernier événement « withdrawn/replaced » du feed (tier 2) encore `live` dans l'état → « à vérifier » (jamais d'apply) — ping-pong géré (retrait→retour = aligné) |
 | `adapters/opencode.json` + `state/opencode.json` | ✅ P5+P6+P7 : health = doc Zen (200 + ancre `The free models`), 3 sources (`zen_docs`, `zen_catalog`, `zen_served`), **14 modèles** = 13 lane (tier 1, `0 promo`) + muse-spark-1.2 (P7, règle 3 observations : catalogue 0.00 + dataset cost explicite + servi `/zen/v1/models`, tier 2, `0` non-promo) ; gates : retrait lane/prix/catalogue structurels, conflit → à vérifier, PROMOTION → problème manuel, **déprécié → à vérifier** (P9, table « Deprecated models » extraite des docs) ; dérive `mimo-v2.5-free` recoupée P8 (docs périmés, absent du v1, retraite non prouvée). Note : `research/opencode-gratuit.md` (recoupement P7 des 25 + dérive P8) ; mémoires `b080a388` + P6 + P7 `8de07a59` + P8 `c416a02a` |
 | `fetch` / `diff` / `apply` | ✅ boucle quotidienne prouvée sur cache réel : fetch → diff exit 2 (24 auto, 0 structurel) → apply → diff exit 0 ; tests négatifs : retrait simulé = structurel **non appliqué** (status intact), format de source mangé = signalé. `fetch` réutilise le cache du jour, `--revalidate` force tout, `diff` refuse un cache ≥7 j et écrit `research/rapport.md` (sauf `--date`). Détection de dérive de sha1 = auto-op `sources` |
-| Timer quotidien / hebdo | ✅ `moteur/timers/` (unités systemd --user) + `install.sh` installés : quotidien 06:17±15 min, hebdo dim. 07:23 — `timer.sh quotidien\|hebdo` (exit 2 du diff = normal pour une unité, vécu via `rapport.md`) |
+| Timer quotidien / hebdo | ✅ `moteur/timers/` (unités systemd --user) + `install.sh` : quotidien 06:17±15 min, hebdo dim. 07:23 — `timer.sh quotidien\|hebdo` produit les rapports; il ne réveille ni n'appelle d'agent. |
 | Engine paramétré par plateforme | ✅ P5 : `--platform <nom>` (défaut `freebuff`) rebind `STATE_PATH`/`COMPARATIF`/`FICHES_*`/`RAPPORT`/`HEADER`/`ALIGN`/libellé/`FN_KEY`/`model_map` depuis `adapters/<nom>.json` ; échec franc si l'adapter est absent ou si `platform` ≠ nom de fichier. Cache par plateforme : `moteur/cache/<plateforme>/AAAA-MM-DD/`. État vide géré (comptes, pas de faux problèmes ; `render`/`check` refusés sans comparatif) |
 
 Sections 4 à 7 ci-dessous = **contrat** (ce que P3-P5 doivent livrer), pas l'état courant.
@@ -37,17 +37,17 @@ Jamais l'inverse. Un LLM ne rend pas un tableau ; du code ne conclut pas sur une
 2. **Écriture machine uniquement dans les blocs balisés** :
    `<!-- GEN:id|run=AAAA-MM-JJ -->` … `<!-- /GEN -->`.
    Toute prose hors bloc est **humaine et interdite au moteur** (« annoter, jamais effacer »).
-3. **Preuve** : Tier 1 requis pour publier un fait ; Tier 2 = déclencheur de vérification, jamais preuve ; Tier 3 = hypothèse étiquetée. Tout fait affiché porte `source + tier + date`.
+3. **Preuve** : Tier 1 requis pour publier un fait ; Tier 2 = déclencheur de vérification, jamais preuve ; Tier 3 = hypothèse étiquetée. Chaque entrée de `facts` porte `value` et `evidence` (`url`, `tier`, `at`).
 4. **NO REGRESSION** : avant toute migration, `python3 moteur/engine.py check` doit rendre **à l'identique** les blocs existants. Écart = on ne migre pas, on corrige d'abord.
 5. **Diff, pas ré-écriture** : un run ne re-valide que ce qui a changé, plus la revalidation hebdomadaire (`--revalidate`) des sources vieilles de >7 jours.
 
 ## 3. Pipeline
 
 ```
-quotidien : timer --user → timer.sh quotidien = fetch → diff           [installé, 06:17±15 min]
-apply     : diff non vide → recoupement Tier 1 (agent) → apply → render → check
-            → lint → trace.md (append) → write-back mémoire            [après un diff non vide]
-hebdo     : timer --user → timer.sh hebdo = fetch --revalidate → diff   [installé, dim. 07:23]
+quotidien : timer --user → timer.sh quotidien = fetch → diff → rapport [installé, 06:17±15 min]
+traitement: lecture du rapport → recoupement Tier 1 → apply → render → check → lint
+            → trace.md (append) → write-back mémoire                    [workflow externe]
+hebdo     : timer --user → timer.sh hebdo = fetch --revalidate → diff → rapport
 ```
 
 `engine.py [--platform <nom>] fetch|diff|apply|render|check|lint` — une entrée par phase.
@@ -58,8 +58,8 @@ parcourent toutes les plateformes déclarées et une plateforme peut aussi s'app
 `research.rapport`) sauf avec `--date` (runs de test/manuels) ; un cache de ≥7 jours
 est refusé (problème → `fetch --revalidate`).
 Pour une unité systemd, l'exit 2 du diff est un état normal : `timer.sh` le traduit en 0,
-le détail vit dans `rapport.md`.
-L'agent n'est appelé que si `diff` sort non vide **ou** en `--revalidate`.
+le détail vit dans `rapport.md`. Le timer ne déclenche aucun traitement après l'écriture
+du rapport : sa consultation et le recoupement restent un workflow externe.
 `apply` n'applique que le sous-ensemble sûr (accès, allocations, sections, historique
 prix, provenance sources/sha1) ; le retrait/d'une divergence = décision manuelle, listée, jamais appliqué.
 `apply` refuse toute écriture si une source, une ligne ou une date d'observation est
@@ -160,3 +160,9 @@ atomique. Un rendu multi-fichiers est préparé en entier avant le premier rempl
 - toute mesure porte `index_version` : version **globale** `facts.index_version` (P9) —
   une seule version active ⇒ « deux mesures sans même version » ne peut pas arriver
 - tout fait affiché a `source + tier + date` ; dates ISO partout
+- `facts` est validé par entrée (`value` + preuve datée) ; les mesures AA restent des chaînes saisies à la main avec un `index_version` global. Le moteur ne contrôle pas la provenance ni l'exactitude de chaque cellule de mesure.
+
+## Vérification locale
+
+`python3 -m unittest discover -s tests -v` · `python3 moteur/engine.py check` ·
+`python3 moteur/engine.py lint`

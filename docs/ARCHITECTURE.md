@@ -1,9 +1,8 @@
 # ARCHITECTURE — moteur d'investigation
 
 Composants, flux et contrats techniques du harnais `moteur/`. Le **quoi/le pourquoi** :
-`vision.md` et `docs/PRD.md` ; le **comportement** : `docs/PFD.md` ; les règles et
-l'état courant : `moteur/ORCHESTRATOR.md` (page unique — « tout ce qui n'est pas ici
-n'existe pas »).
+`vision.md` ; les règles et l'état courant : `moteur/ORCHESTRATOR.md` (page unique —
+« tout ce qui n'est pas ici n'existe pas »).
 
 ## 1. Principes
 
@@ -17,7 +16,9 @@ n'existe pas »).
    `<!-- /GEN -->` ; toute prose hors bloc est humaine (« annoter, jamais effacer »).
 4. **Tier 2 = déclencheur de vérification, jamais d'écriture** — un signal d'annonce
    (RSS, docs datées) produit un « à vérifier » debout ; il n'écrit jamais l'état.
-5. **Échec bruyant** — health abort, `lint ÉCHEC`, `diff` non nul : rien de silencieux.
+5. **Échec explicite** — health abort et `lint ÉCHEC` signalent une erreur ; exit 2 de
+   `diff` signale un changement et écrit le rapport. Aucun agent ni notification n'est
+   déclenché automatiquement.
 6. **Une porte d'entrée CLI** — `moteur/engine.py` expose une commande `cmd_*` par phase ;
    les contrats sont regroupés par responsabilité et un adaptateur correspond à un fichier JSON.
 
@@ -48,12 +49,12 @@ flowchart TB
   CMD --> GEN
   CMD --> RA
 
-  subgraph A["Jugement — agent (humain + LLM)"]
-    J1{"diff non vide ?"} -->|oui| J2["recouper Tier 1 → apply → render → check → lint"]
+  subgraph A["Jugement — workflow externe (humain + LLM)"]
+    J1{"diff à traiter ?"} -->|workflow manuel| J2["recouper Tier 1 → apply → render → check → lint"]
     J2 --> J3["trace.md (append) + write-back mémoire"]
   end
 
-  RA -.->|"signal"| J1
+  RA -.->|"rapport à consulter"| J1
 ```
 
 ## 3. Arborescence
@@ -63,8 +64,6 @@ llm-compare/
 ├── README.md                  # entrée humaine du dépôt
 ├── vision.md                  # direction, non-goals, principes
 ├── docs/                      # documentation produit
-│   ├── PRD.md                 #   exigences (quoi/pourquoi)
-│   ├── PFD.md                 #   spécification fonctionnelle (comportement)
 │   └── ARCHITECTURE.md        #   ce fichier (flux/contrats)
 ├── research/                  # couche recherche (faits établis)
 │   ├── comparatif.md          #   tableau commun (bloc machine GEN:comparatif)
@@ -123,7 +122,7 @@ sequenceDiagram
         E-->>T: exit 0 (rien) ou 2 (changements — normal)
     end
     T->>U: 0 si tout 0|2, sinon premier code d'échec
-    Note over U,R: diff non vide → intervention agent :<br/>recoupement Tier 1 → apply → render → check → lint → trace → mémoire
+    Note over U,R: le timer écrit le rapport; aucun agent n'est déclenché automatiquement<br/>le workflow externe peut recouper, appliquer, contrôler, tracer et écrire en mémoire
 ```
 
 ## 6. Modèle d'état
@@ -137,8 +136,11 @@ sequenceDiagram
   "generated_at": "…ISO…",
   "imported_from": "research/comparatif.md (backfill AAAA-MM-JJ)",
   "sources": [ { "url", "tier", "fetched_at", "sha1?" } ],
-  "facts": {                       // faits datés globaux (ex. index_version, freebucks)
-    "index_version": { "value", "evidence": { "url", "tier" }, "at" }
+  "facts": {                       // faits globaux sourcés (ex. index_version, freebucks)
+    "index_version": {
+      "value": "v4.3.2",
+      "evidence": { "url": "https://…", "tier": 1, "at": "…ISO…" }
+    }
   },
   "models": [                      // obligatoires : id, display, status, access,
     {                              // price, context, measures, history
@@ -233,6 +235,8 @@ sont refusés.
   `enable --now`). Les unités du dépôt restent la source de vérité.
 - Contrat `timer.sh` : **exit 2 d'un `diff` = état normal** (0|2 acceptés) ; un échec
   d'une plateforme n'empêche pas les suivantes ; le détail vit dans `research.rapport`.
+- Le timer s'arrête après `fetch` et `diff` : il ne déclenche pas l'agent. Un workflow
+  externe doit consulter le rapport et prendre en charge le recoupement.
 - `timer.sh` : `set -eu`, boucle sur `moteur/adapters/*.json` — une nouvelle plateforme
   est automatiquement schedulée.
 
