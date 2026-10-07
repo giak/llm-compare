@@ -1,0 +1,673 @@
+{
+  "platform": "opencode",
+  "schema_version": 1,
+  "generated_at": "2026-10-07T10:55:10+00:00",
+  "imported_from": "P6+P7 : backfill lane free — ex_zen sur le cache 2026-10-07 (13 modèles)",
+  "sources": [
+    {
+      "url": "https://opencode.ai/docs/zen/",
+      "tier": 1,
+      "fetched_at": "2026-10-07T10:54:54+00:00",
+      "sha1": "4d6e261781510c1f7634c2b8091039abfa593f69"
+    },
+    {
+      "url": "https://models.opencode.ai/providers/opencode",
+      "tier": 1,
+      "fetched_at": "2026-10-07T10:54:54+00:00",
+      "sha1": "a6dc966251e876ed4dc702fd0e8ee626cee82d33"
+    },
+    {
+      "url": "https://opencode.ai/zen/v1/models",
+      "tier": 1,
+      "fetched_at": "2026-10-07T10:54:54+00:00",
+      "sha1": "147abc76c5babdc3aaed2d3f06ad8bec8d52fe05"
+    }
+  ],
+  "facts": {},
+  "models": [
+    {
+      "id": "big-pickle",
+      "display": "Big Pickle",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Big Pickle | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "space-bunny-free",
+      "display": "Space Bunny Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Space Bunny Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "longcat-2-5-preview-free",
+      "display": "LongCat 2.5 Preview Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "LongCat 2.5 Preview Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "exo-free",
+      "display": "Exo Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Exo Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fledge-alpha-free",
+      "display": "Fledge Alpha Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Fledge Alpha Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mimo-v2-6-flash-free",
+      "display": "MiMo-V2.6-Flash Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "MiMo-V2.6-Flash Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mimo-v2-5-free",
+      "display": "MiMo-V2.5 Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "MiMo-V2.5 Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ling-3-1-flash-free",
+      "display": "Ling 3.1 Flash Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Ling 3.1 Flash Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ling-3-0-flash-fin-free",
+      "display": "Ling 3.0 Flash Fin Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Ling 3.0 Flash Fin Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "nemotron-3-ultra-free",
+      "display": "Nemotron 3 Ultra Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Nemotron 3 Ultra Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "nemotron-3-5-lightning-free",
+      "display": "Nemotron 3.5 Lightning Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Nemotron 3.5 Lightning Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "muse-spark-1-3-contributor-free",
+      "display": "Muse Spark 1.3 Contributor Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Muse Spark 1.3 Contributor Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "jev-1-13-free",
+      "display": "Jev 1.13 Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T09:06:30+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://opencode.ai/docs/zen/",
+            "tier": 1,
+            "quote": "Jev 1.13 Free | Free | Free | Free"
+          }
+        }
+      ]
+    },
+    {
+      "id": "muse-spark-1-2-contributor-free",
+      "display": "Muse Spark 1.2 Contributor Free",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "full",
+      "emphasis": false,
+      "price": {
+        "value": 0,
+        "unit": "Mtok",
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "n.d.",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": null,
+      "history": [
+        {
+          "at": "2026-10-07T10:54:54+00:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://models.opencode.ai/providers/opencode",
+            "tier": 2,
+            "quote": "Muse Spark 1.2 Free | muse-spark-1.2-contributor-free | 1,048,576 | 131,072 | $0.00 / $0.00"
+          }
+        }
+      ]
+    }
+  ]
+}

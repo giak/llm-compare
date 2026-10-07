@@ -1,0 +1,860 @@
+{
+  "platform": "freebuff",
+  "schema_version": 1,
+  "generated_at": "2026-10-07T08:37:58+00:00",
+  "imported_from": "research/comparatif.md (backfill 2026-10-07)",
+  "sources": [
+    {
+      "url": "https://freebuff.com/llms.txt",
+      "tier": 1,
+      "fetched_at": "2026-10-07T08:33:30+00:00",
+      "sha1": "8eab93085d6aed2982b5032350b110a9073d4717"
+    },
+    {
+      "url": "https://freebuff.com/plans",
+      "tier": 1,
+      "fetched_at": "2026-10-07T08:33:30+00:00",
+      "sha1": "7bf6616b2d38fe963bc6dd5e9a27af100e8f8f7d"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/README.md",
+      "tier": 1,
+      "fetched_at": "2026-10-07T08:33:30+00:00",
+      "sha1": "5d8b9f0825ecf5209b9f98aa5e6c833f26218724"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+      "tier": 1,
+      "fetched_at": "2026-10-07T08:33:30+00:00",
+      "sha1": "7a6243c5c61303edb369b3fab273d1793aa03637"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+      "tier": 1,
+      "fetched_at": "2026-10-07T08:33:30+00:00",
+      "sha1": "380fea859872bf4e827911865e176ff418ba4f9e"
+    },
+    {
+      "url": "https://freebuff-changelog.nordicnode.workers.dev/feed-models.xml",
+      "tier": 2,
+      "fetched_at": "2026-10-07T08:33:30+00:00",
+      "sha1": "1494321a824c31fc92e299ff5087c452a09a9192"
+    }
+  ],
+  "facts": {
+    "freebucks": {
+      "value": [
+        {
+          "scope": "limited",
+          "freebucks": 25
+        },
+        {
+          "scope": "vpn",
+          "freebucks": 20
+        },
+        {
+          "scope": "starter",
+          "freebucks": 105
+        },
+        {
+          "scope": "plus",
+          "freebucks": 200
+        },
+        {
+          "scope": "pro",
+          "freebucks": 350
+        }
+      ],
+      "evidence": {
+        "url": "https://freebuff.com/llms.txt",
+        "tier": 1,
+        "at": "2026-10-07T08:02:21+00:00"
+      }
+    },
+    "index_version": {
+      "value": "v4.3.2",
+      "evidence": {
+        "url": "https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index",
+        "tier": 1,
+        "at": "2026-10-07T11:22:57+00:00",
+        "quote": "Artificial Analysis Intelligence Index v4.3.2 — 10 évaluations (AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, HLE, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1) ; re-baselining v4.3 annoncé le 2026-09-07 — version des valeurs AA de research/comparatif.md et des fiches"
+      }
+    }
+  },
+  "models": [
+    {
+      "id": "muse-spark-1-3",
+      "display": "Muse Spark 1.3",
+      "effort": "max",
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "paid_only",
+      "emphasis": true,
+      "price": {
+        "value": null,
+        "unit": null,
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "**48,1**",
+        "tb4": "33,3",
+        "hle": "48,7",
+        "gdpval": "59,2",
+        "aa_lcr": "83,0",
+        "omis_prec": "43,6",
+        "omis_nonhall": "67,1",
+        "usd_task": "**1,60**",
+        "tok_s": "140",
+        "e2e_s": "37"
+      },
+      "fiche": "research/fiches/muse-spark-1.3.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "powerful",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "section": "powerful"
+    },
+    {
+      "id": "mimo-v2-6-pro",
+      "display": "MiMo-V2.6-Pro",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "metered",
+      "emphasis": false,
+      "price": {
+        "value": 30,
+        "unit": "h",
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "46,3",
+        "tb4": "**34,9**",
+        "hle": "**49,4**",
+        "gdpval": "**59,4**",
+        "aa_lcr": "**86,3**",
+        "omis_prec": "34,8",
+        "omis_nonhall": "59,4",
+        "usd_task": "0,13",
+        "tok_s": "**37**",
+        "e2e_s": "64"
+      },
+      "fiche": "research/fiches/mimo-v2.6-pro.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "powerful",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "section": "powerful"
+    },
+    {
+      "id": "solar-pro-4",
+      "display": "Solar Pro 4",
+      "effort": null,
+      "suffix": "†",
+      "status": "live",
+      "retired_at": null,
+      "access": "metered",
+      "emphasis": true,
+      "price": {
+        "value": 0,
+        "unit": "h",
+        "promo": true,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "524K"
+      },
+      "measures": {
+        "aa": "28 †",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "71 *",
+        "omis_prec": "19 *",
+        "omis_nonhall": "75,6 *",
+        "usd_task": "n.d.",
+        "tok_s": "115",
+        "e2e_s": "n.d."
+      },
+      "fiche": "research/fiches/solar-pro-4.md",
+      "history": [
+        {
+          "at": "2026-09-05T00:00:00-07:00",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": "0 Freebucks · Labor Day weekend (through Sep 7 PT)"
+          }
+        },
+        {
+          "at": "2026-09-08T00:00:00-07:00",
+          "field": "price",
+          "from": null,
+          "to": 5,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        },
+        {
+          "at": "2026-09-09T15:49:00Z",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": "0 Freebucks"
+          }
+        },
+        {
+          "at": "2026-09-13T05:00:00Z",
+          "field": "price",
+          "from": null,
+          "to": 5,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        },
+        {
+          "at": "2026-09-14T03:46:00Z",
+          "field": "price",
+          "from": null,
+          "to": 10,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        },
+        {
+          "at": "2026-09-25T19:00:00Z",
+          "field": "price",
+          "from": null,
+          "to": 10,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        },
+        {
+          "at": "2026-10-05T07:15:00Z",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        },
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "unlimited",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "fn": {
+        "freebuff": "²"
+      },
+      "section": "unlimited"
+    },
+    {
+      "id": "glm-5-3-flash",
+      "display": "GLM-5.3-Flash",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "metered",
+      "emphasis": false,
+      "price": {
+        "value": 15,
+        "unit": "h",
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "41,8",
+        "tb4": "32,8",
+        "hle": "40",
+        "gdpval": "47,6",
+        "aa_lcr": "80",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "0,25",
+        "tok_s": "52",
+        "e2e_s": "51"
+      },
+      "fiche": "research/fiches/glm-5.3-flash.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "optimized",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "fn": {
+        "freebuff": "⁹"
+      },
+      "section": "optimized"
+    },
+    {
+      "id": "ling-3-1-flash",
+      "display": "Ling 3.1 Flash",
+      "effort": null,
+      "suffix": null,
+      "status": "absent",
+      "retired_at": null,
+      "access": "unknown",
+      "emphasis": true,
+      "price": {
+        "value": null,
+        "unit": null,
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "**262K**"
+      },
+      "measures": {
+        "aa": "41,1",
+        "tb4": "33,3",
+        "hle": "39,4",
+        "gdpval": "56,1",
+        "aa_lcr": "83,0",
+        "omis_prec": "29,1",
+        "omis_nonhall": "62,1",
+        "usd_task": "**0,99**",
+        "tok_s": "**211**",
+        "e2e_s": "n.d."
+      },
+      "fiche": "research/fiches/ling-3.1-flash.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "unlimited",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "fn": {
+        "context": "¹",
+        "freebuff": "⁴"
+      },
+      "section": "unlimited"
+    },
+    {
+      "id": "deepseek-v4-1-flash",
+      "display": "DeepSeek-V4.1-Flash",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "metered",
+      "emphasis": false,
+      "price": {
+        "value": 15,
+        "unit": "h",
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "39,5",
+        "tb4": "26,8",
+        "hle": "39,2",
+        "gdpval": "55,0",
+        "aa_lcr": "84,0",
+        "omis_prec": "**46,4**",
+        "omis_nonhall": "**3,5**",
+        "usd_task": "0,27",
+        "tok_s": "**209**",
+        "e2e_s": "**13**"
+      },
+      "fiche": "research/fiches/deepseek-v4.1-flash.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "optimized",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "section": "optimized"
+    },
+    {
+      "id": "gpt-6-luna",
+      "display": "GPT-6 Luna",
+      "effort": "max",
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "metered",
+      "emphasis": false,
+      "price": {
+        "value": 20,
+        "unit": "h",
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "38,1",
+        "tb4": "12,6",
+        "hle": "38,5",
+        "gdpval": "46,9",
+        "aa_lcr": "83,3",
+        "omis_prec": "43,8",
+        "omis_nonhall": "23,3",
+        "usd_task": "**0,07**",
+        "tok_s": "141",
+        "e2e_s": "111"
+      },
+      "fiche": "research/fiches/gpt-6-luna.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "powerful",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "section": "powerful"
+    },
+    {
+      "id": "mimo-v2-6-flash",
+      "display": "MiMo-V2.6-Flash",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "metered",
+      "emphasis": false,
+      "price": {
+        "value": 10,
+        "unit": "h",
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "37,9",
+        "tb4": "22,7",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "0,06",
+        "tok_s": "51",
+        "e2e_s": "53"
+      },
+      "fiche": "research/fiches/mimo-v2.6-flash.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "optimized",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "section": "optimized"
+    },
+    {
+      "id": "laguna-s-2-1",
+      "display": "Laguna S 2.1",
+      "effort": null,
+      "suffix": null,
+      "status": "absent",
+      "retired_at": null,
+      "access": "unknown",
+      "emphasis": true,
+      "price": {
+        "value": null,
+        "unit": null,
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "**n.d.**",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": "research/fiches/laguna-s-2-1.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "unlimited",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "fn": {
+        "freebuff": "⁴"
+      },
+      "section": "unlimited"
+    },
+    {
+      "id": "solar-mini-4",
+      "display": "Solar Mini 4",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "metered",
+      "emphasis": false,
+      "price": {
+        "value": 5,
+        "unit": "FB/h",
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "524K"
+      },
+      "measures": {
+        "aa": "24,1",
+        "tb4": "**1,0**",
+        "hle": "25,8",
+        "gdpval": "28,6",
+        "aa_lcr": "83,3",
+        "omis_prec": "18,4",
+        "omis_nonhall": "64,2",
+        "usd_task": "~0,35",
+        "tok_s": "208",
+        "e2e_s": "n.d."
+      },
+      "fiche": "research/fiches/solar-mini-4.md",
+      "history": [
+        {
+          "at": "2026-09-23T19:18:47Z",
+          "field": "price",
+          "from": null,
+          "to": 5,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        },
+        {
+          "at": "2026-10-02T18:00:00Z",
+          "field": "price",
+          "from": null,
+          "to": 0,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": "Free through Sunday, Oct 4 PT"
+          }
+        },
+        {
+          "at": "2026-10-05T00:00:00-07:00",
+          "field": "price",
+          "from": null,
+          "to": 5,
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        },
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "optimized",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "fn": {
+        "freebuff": "⁷"
+      },
+      "section": "optimized"
+    },
+    {
+      "id": "space-bunny-alpha",
+      "display": "Space Bunny Alpha",
+      "effort": null,
+      "suffix": null,
+      "status": "retired",
+      "retired_at": "2026-10-06",
+      "access": "unknown",
+      "emphasis": false,
+      "price": {
+        "value": null,
+        "unit": null,
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "**n.d.**",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": "research/fiches/space-bunny-alpha.md",
+      "history": []
+    },
+    {
+      "id": "deepseek-v4-1-flash-fast",
+      "display": "DeepSeek V4.1 Flash Fast",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "metered",
+      "emphasis": false,
+      "price": {
+        "value": 5,
+        "unit": "j/h",
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "n.d."
+      },
+      "measures": {
+        "aa": "**n.d.**",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": "research/fiches/deepseek-v4.1-flash-fast.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "powerful",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "fn": {
+        "freebuff": "⁵"
+      },
+      "section": "powerful"
+    },
+    {
+      "id": "gemini-3-8-flash",
+      "display": "Gemini 3.8 Flash",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "paid_only",
+      "emphasis": true,
+      "price": {
+        "value": null,
+        "unit": null,
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "**n.d.**",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": "research/fiches/gemini-3.8-flash.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "powerful",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "section": "powerful"
+    },
+    {
+      "id": "gpt-6-1-sol",
+      "display": "GPT-6.1 Sol",
+      "effort": null,
+      "suffix": null,
+      "status": "live",
+      "retired_at": null,
+      "access": "us_only",
+      "emphasis": true,
+      "price": {
+        "value": null,
+        "unit": null,
+        "promo": false,
+        "since": null,
+        "end": null
+      },
+      "context": {
+        "value": "1M"
+      },
+      "measures": {
+        "aa": "**n.d.**",
+        "tb4": "n.d.",
+        "hle": "n.d.",
+        "gdpval": "n.d.",
+        "aa_lcr": "n.d.",
+        "omis_prec": "n.d.",
+        "omis_nonhall": "n.d.",
+        "usd_task": "n.d.",
+        "tok_s": "n.d.",
+        "e2e_s": "n.d."
+      },
+      "fiche": "research/fiches/gpt-6.1-sol.md",
+      "history": [
+        {
+          "at": "2026-10-07T08:02:21+00:00",
+          "field": "section",
+          "from": null,
+          "to": "powerful",
+          "evidence": {
+            "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+            "tier": 1,
+            "quote": ""
+          }
+        }
+      ],
+      "section": "powerful"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "platform": "freebuff",
+  "label": "Freebuff",
+  "model_map": {
+    "FREEBUFF_SOLAR_PRO_4_MODEL_ID": "solar-pro-4",
+    "FREEBUFF_SOLAR_MINI_4_MODEL_ID": "solar-mini-4"
+  },
+  "research": {
+    "comparatif": "research/comparatif.md",
+    "fiches": "research/fiches",
+    "rapport": "research/rapport.md"
+  },
+  "health": {
+    "url": "https://freebuff.com/llms.txt",
+    "must_contain": "Freebuff"
+  },
+  "aliases": {
+    "meta/muse-spark-1.3-contributor": "muse-spark-1-3"
+  },
+  "sources": [
+    {
+      "id": "llms",
+      "url": "https://freebuff.com/llms.txt",
+      "tier": 1,
+      "type": "llms_txt"
+    },
+    {
+      "id": "plans",
+      "url": "https://freebuff.com/plans",
+      "tier": 1,
+      "type": "plans_html"
+    },
+    {
+      "id": "readme",
+      "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/README.md",
+      "tier": 1,
+      "type": "readme_md"
+    },
+    {
+      "id": "picker_sections",
+      "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/util/freebuff-picker-sections.ts",
+      "tier": 1,
+      "type": "picker_ts"
+    },
+    {
+      "id": "solar_promo",
+      "url": "https://raw.githubusercontent.com/CodebuffAI/freebuff/main/common/src/constants/freebuff-solar-promo.ts",
+      "tier": 1,
+      "type": "solar_promo_ts"
+    },
+    {
+      "id": "feed_models",
+      "url": "https://freebuff-changelog.nordicnode.workers.dev/feed-models.xml",
+      "tier": 2,
+      "type": "rss"
+    }
+  ]
+}

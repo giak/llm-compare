@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "llm-compare/state.schema.json",
+  "title": "État d'une plateforme (source de vérité)",
+  "description": "Un fichier par plateforme : moteur/state/<plateforme>.json. Versionné dans git. Seul ce fichier est machine-owned ; les markdown ne font que le rendre.",
+  "type": "object",
+  "required": ["platform", "schema_version", "generated_at", "sources", "facts", "models"],
+  "additionalProperties": false,
+  "properties": {
+    "platform": { "type": "string", "description": "freebuff | opencode | … (nom du fichier adapter)" },
+    "schema_version": { "const": 1 },
+    "generated_at": { "type": "string", "format": "date-time", "description": "Dernière écriture machine de l'état (ISO 8601, UTC)" },
+    "imported_from": { "type": ["string", "null"], "description": "Origine du backfill initial, le cas échéant" },
+    "sources": {
+      "type": "array",
+      "description": "Sources réellement collectées lors du dernier fetch (vide après un import de backfill).",
+      "items": {
+        "type": "object",
+        "required": ["url", "tier", "fetched_at"],
+        "additionalProperties": false,
+        "properties": {
+          "url": { "type": "string" },
+          "tier": { "enum": [1, 2, 3] },
+          "fetched_at": { "type": "string", "format": "date-time" },
+          "sha1": { "type": "string", "description": "Empreinte du corps reçu — prouve le recoupement" }
+        }
+      }
+    },
+    "facts": {
+      "type": "object",
+      "description": "Faits de niveau plateforme (allocations, règles, grilles horaires). Toute valeur porte source + tier + date via le bloc `evidence`.",
+      "additionalProperties": true
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "display", "status", "access", "price", "context", "measures", "history"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "display": { "type": "string", "description": "Nom dans la colonne Modèle, sans effort ni suffixe" },
+          "effort": { "type": ["string", "null"], "description": "Palier AA entre parenthèses : max, xhigh, …" },
+          "suffix": { "type": ["string", "null"], "description": "Qualifier posé après le nom († = index estimé)" },
+          "status": {
+            "enum": ["live", "retired", "absent"],
+            "description": "live = dans le catalogue ; retired = retiré (🪦) ; absent = hors catalogue Freebuff"
+          },
+          "section": {
+            "enum": ["unlimited", "optimized", "powerful", null],
+            "description": "Section du picker (freebuff-picker-sections.ts). Non rendu dans les markdowns : suivi d'état pour détecter les déménagements de section (ex. Solar Mini 4 unlimited → optimized le 2026-10-05)."
+          },
+          "retired_at": { "type": ["string", "null"], "format": "date", "description": "ISO, obligatoire si status=retired" },
+          "access": {
+            "enum": ["full", "metered", "paid_only", "us_only", "unknown"],
+            "description": "Génère la colonne Freebuff : 🔒 payant (paid_only) / 🔒 FR = payant (us_only) / prix (full|metered) / rien (unknown)"
+          },
+          "emphasis": { "type": "boolean", "description": "Gras sur toute la cellule prix ( marqueur manuel d'accent )" },
+          "fn": {
+            "type": "object",
+            "description": "Marqueurs de note humaine par colonne (⁴, ⁹, …). Clé = plateforme (freebuff, opencode, …) ou model/context. La note elle-même vit dans la prose du markdown.",
+            "additionalProperties": { "type": "string" },
+            "properties": {
+              "model": { "type": "string" },
+              "context": { "type": "string" }
+            }
+          },
+          "price": {
+            "type": "object",
+            "required": ["value", "unit", "promo"],
+            "additionalProperties": false,
+            "description": "Prix Freebuff structuré. Rendu : value=0 + promo => « 0 promo » ; unit=h => « <value>/h » (15/h) ; sinon « <value> <unit> » (5 FB/h, 5 j/h).",
+            "properties": {
+              "value": { "type": ["number", "null"] },
+              "unit": { "type": ["string", "null"], "description": "h | FB/h | j/h | … (unité de `value`)" },
+              "promo": { "type": "boolean" },
+              "since": { "type": ["string", "null"], "format": "date-time" },
+              "end": { "type": ["string", "null"], "format": "date-time", "description": "null = promo sans échéance connue" }
+            }
+          },
+          "context": {
+            "type": "object",
+            "required": ["value"],
+            "additionalProperties": false,
+            "description": "Fenêtre de contexte telle qu'affichée (1M, 524K, 262K, n.d.) — chaîne de rendu, pas un entier : le tableau est la référence d'affichage.",
+            "properties": {
+              "value": { "type": "string" },
+              "tokens": { "type": ["integer", "null"], "description": "Valeur numérique si connue (contrôles futurs)" }
+            }
+          },
+          "measures": {
+            "type": "object",
+            "description": "Colonnes AA, saisies (jamais scrapées), verbatim du tableau — les marqueurs y sont conservés : **48,1** = meilleur de la colonne, « 71 * » = index antérieur, « 28 † » = estimé. La version d'index (v4.3.2) et la date de mesure sont globales dans `facts`.",
+            "required": ["aa", "tb4", "hle", "gdpval", "aa_lcr", "omis_prec", "omis_nonhall", "usd_task", "tok_s", "e2e_s"],
+            "additionalProperties": { "type": "string" }
+          },
+          "fiche": { "type": ["string", "null"], "description": "Chemin relatif de la fiche LLM associée (contrôle de cohérence lint). null = non appariée." },
+          "history": {
+            "type": "array",
+            "description": "Événements datés (prix, accès, retrait) — la chronologie vit ici, jamais dans la prose seule.",
+            "items": {
+              "type": "object",
+              "required": ["at", "field", "from", "to"],
+              "additionalProperties": false,
+              "properties": {
+                "at": { "type": "string", "format": "date-time" },
+                "field": { "type": "string", "description": "access | price | status | …" },
+                "from": {},
+                "to": {},
+                "evidence": {
+                  "type": "object",
+                  "required": ["url", "tier"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "url": { "type": "string" },
+                    "tier": { "enum": [1, 2, 3] },
+                    "commit": { "type": "string" },
+                    "quote": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

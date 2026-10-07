@@ -1,0 +1,32 @@
+{
+  "platform": "opencode",
+  "label": "OpenCode",
+  "model_map": {},
+  "research": {
+    "rapport": "research/rapport-opencode.md"
+  },
+  "health": {
+    "url": "https://opencode.ai/docs/zen/",
+    "must_contain": "The free models"
+  },
+  "sources": [
+    {
+      "id": "zen_docs",
+      "url": "https://opencode.ai/docs/zen/",
+      "tier": 1,
+      "type": "zen_docs"
+    },
+    {
+      "id": "zen_catalog",
+      "url": "https://models.opencode.ai/providers/opencode",
+      "tier": 1,
+      "type": "zen_catalog"
+    },
+    {
+      "id": "zen_served",
+      "url": "https://opencode.ai/zen/v1/models",
+      "tier": 1,
+      "type": "v1_models"
+    }
+  ]
+}
