@@ -1,0 +1,10 @@
+[Unit]
+Description=llm-compare : timer quotidien fetch + diff
+
+[Timer]
+OnCalendar=*-*-* 06:17:00
+RandomizedDelaySec=900
+Persistent=true
+
+[Install]
+WantedBy=timers.target

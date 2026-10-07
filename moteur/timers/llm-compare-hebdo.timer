@@ -1,0 +1,10 @@
+[Unit]
+Description=llm-compare : timer hebdo fetch --revalidate + diff
+
+[Timer]
+OnCalendar=Sun *-*-* 07:23:00
+RandomizedDelaySec=900
+Persistent=true
+
+[Install]
+WantedBy=timers.target
