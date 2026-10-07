@@ -3,5 +3,5 @@ Description=llm-compare : fetch --revalidate + diff hebdomadaire des plateformes
 
 [Service]
 Type=oneshot
-WorkingDirectory=%h/projects/llm-compare
-ExecStart=%h/projects/llm-compare/moteur/timer.sh hebdo
+WorkingDirectory="@PROJECT_ROOT@"
+ExecStart="@PROJECT_ROOT@/moteur/timer.sh" hebdo

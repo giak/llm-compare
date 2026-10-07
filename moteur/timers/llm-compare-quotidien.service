@@ -3,5 +3,5 @@ Description=llm-compare : fetch + diff quotidien des plateformes
 
 [Service]
 Type=oneshot
-WorkingDirectory=%h/projects/llm-compare
-ExecStart=%h/projects/llm-compare/moteur/timer.sh quotidien
+WorkingDirectory="@PROJECT_ROOT@"
+ExecStart="@PROJECT_ROOT@/moteur/timer.sh" quotidien
